@@ -1,0 +1,12 @@
+*.pxd		text
+*.py 		text eol=lf
+*.py3 		text eol=lf
+*.pyw 		text
+*.pyx  		text
+
+*.db		binary
+*.p 		binary
+*.pkl 		binary
+*.pyc 		binary
+*.pyd		binary
+*.pyo 		binary

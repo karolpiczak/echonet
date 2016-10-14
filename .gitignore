@@ -1,4 +1,6 @@
 **/.idea/
 **/__pycache__
 **/.*.cache
-examples/*.log
+/examples/*.h5
+/experiments/
+/data/*

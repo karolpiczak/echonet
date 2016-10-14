@@ -14,23 +14,16 @@ Paper source code ported to Keras with some small adjustments.
 import argparse
 import functools
 import os
-import re
 import sys
 
 import numpy as np
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('NAME', help='model name')
     parser.add_argument('--device', help='Theano device used for computations')
-    parser.add_argument('--seed', help='random seed used for initialization', type=int)
     args = parser.parse_args()
 
-    if not re.match(r'^[A-Za-z0-9_\-./]+$', args.NAME):
-        err_msg = 'Model name must contain only alphanumeric characters, underscores or slashes.'
-        raise argparse.ArgumentTypeError(err_msg)
-
-    RANDOM_SEED = args.seed if args.seed else 20161010
+    RANDOM_SEED = 20161013
     np.random.seed(RANDOM_SEED)
 
     DEVICE = args.device if args.device else 'gpu0'
@@ -49,8 +42,8 @@ if __name__ == '__main__':
     from keras.layers.convolutional import MaxPooling2D as Pool
     from keras.layers.core import Activation, Dense, Dropout, Flatten
 
-    from audionet.models import AudioNet
-    from audionet.datasets.esc50 import OriginalESC
+    from echonet.models import EchoNet
+    from echonet.datasets.esc_original import OriginalESC
 
 
     def uniform(scale):
@@ -63,9 +56,11 @@ if __name__ == '__main__':
     VALIDATION_FOLDS = [5]
     TEST_FOLDS = [1]
 
-    esc50 = OriginalESC('../../ESC-50/', '.esc50.cache', TRAIN_FOLDS, VALIDATION_FOLDS, TEST_FOLDS)
+    print('\nLoading ESC-50 dataset from ../data/ESC-50/')
+    esc50 = OriginalESC('../data/ESC-50/', '../data/.ESC-50.cache', TRAIN_FOLDS, VALIDATION_FOLDS,
+                        TEST_FOLDS)
 
-    input_shape = esc50.get_input_shape()
+    input_shape = esc50.input_shape
     L2 = keras.regularizers.l2
 
     layers = [
@@ -88,12 +83,17 @@ if __name__ == '__main__':
     ]
 
     optimizer = keras.optimizers.SGD(lr=0.01, momentum=0.9, nesterov=True)
-    model = AudioNet(args.NAME, layers=layers, optimizer=optimizer)
+
+    print('\nCompiling Keras model')
+    model = EchoNet('esc_convnet_paper', layers=layers, optimizer=optimizer)
 
     # Initialize biases of the first convolutional layer
     conv_weights = model.layers[0].get_weights()
     conv_weights[1][:] = 0.1
     model.layers[0].set_weights(conv_weights)
 
-    epoch_size = esc50.get_train_size() * 25    # Approximation of the original paper
+    print('\nTraining... (batch size of 1 000 | 30 batches per epoch)')
+    epoch_size = esc50.train_size * 25    # Approximation of the original paper
     model.fit(esc50, batch_size=1000, epochs=150, epoch_size=epoch_size)
+
+    model.net.save('esc_convnet_paper.h5')

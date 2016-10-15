@@ -20,7 +20,7 @@ import numpy as np
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--device', help='Theano device used for computations')
+    parser.add_argument('-D', '--device', help='Theano device used for computations')
     args = parser.parse_args()
 
     RANDOM_SEED = 20161013

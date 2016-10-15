@@ -62,7 +62,7 @@ class OriginalESC(Dataset):
 
     def _generate_spectrograms(self):
         for row in tqdm(self.meta.itertuples(), total=len(self.meta)):
-            specfile = self.work_dir + row.filename + '.orig.spec.npy'.format(self.bands)
+            specfile = self.work_dir + row.filename + '.orig.spec.npy'
 
             if os.path.exists(specfile):
                 continue

@@ -19,7 +19,7 @@ import scipy.signal
 from tqdm import tqdm
 
 from echonet.datasets.dataset import Dataset
-from echonet.utils.generics import load_audio, to_one_hot
+from echonet.utils.generics import generate_delta, load_audio, to_one_hot
 
 
 class OriginalESC(Dataset):
@@ -111,7 +111,7 @@ class OriginalESC(Dataset):
 
         while offset < np.shape(spec)[1] - self.segment_length:
             segment = spec[:, offset:offset + self.segment_length]
-            delta = self._generate_delta(segment)
+            delta = generate_delta(segment)
             offset += hop_length
             segments.append(np.stack([segment, delta]))
 
@@ -176,17 +176,8 @@ class OriginalESC(Dataset):
         spec = np.load(self.work_dir + filename + '.orig.spec.npy')
         offset = self.RandomState.randint(0, np.shape(spec)[1] - self.segment_length + 1)
         spec = spec[:, offset:offset + self.segment_length]
-        delta = self._generate_delta(spec)
+        delta = generate_delta(spec)
         return np.stack([spec, delta])
-
-    def _generate_delta(self, spec):
-        # ported librosa v0.3.1. implementation
-        window = np.arange(4, -5, -1)
-        padding = [(0, 0), (5, 5)]
-        delta = np.pad(spec, padding, mode='edge')
-        delta = scipy.signal.lfilter(window, 1, delta, axis=-1)
-        idx = [Ellipsis, slice(5, -5, None)]
-        return delta[idx]
 
     def _score(self, model, data):
         predictions = pd.DataFrame(model.predict(data.X))

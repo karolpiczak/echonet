@@ -4,6 +4,7 @@
 """
 
 import numpy as np
+import scipy.signal
 
 import pydub
 
@@ -25,3 +26,13 @@ def to_one_hot(targets, class_count):
         one_hot_enc[r, targets[r]] = 1
 
     return one_hot_enc
+
+
+def generate_delta(spec):
+    # ported librosa v0.3.1. implementation
+    window = np.arange(4, -5, -1)
+    padding = [(0, 0), (5, 5)]
+    delta = np.pad(spec, padding, mode='edge')
+    delta = scipy.signal.lfilter(window, 1, delta, axis=-1)
+    idx = [Ellipsis, slice(5, -5, None)]
+    return delta[idx]

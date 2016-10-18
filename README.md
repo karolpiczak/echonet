@@ -1,5 +1,7 @@
 # EchoNet
 
+[![Waffle.io](https://img.shields.io/waffle/label/karoldvl/echonet/to-do.svg)](http://waffle.io/karoldvl/echonet)
+
 Porting some of my old convnet code into Keras - a work in progress.
 
 It's still a very rough skeleton, so use at your own risk, but due to numerous inquiries I decided to publish it sooner rather than later. I will try to implement the missing bits soon.

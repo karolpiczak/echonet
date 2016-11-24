@@ -1,6 +1,8 @@
 numpy
 pandas
+tqdm
 pydub
 librosa
+seaborn
 git+git://github.com/Theano/Theano.git
 keras

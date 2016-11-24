@@ -9,6 +9,38 @@ Paper source code ported to Keras with some small adjustments.
 - [Environmental Sound Classification with Convolutional Neural Networks -
     paper replication data](https://github.com/karoldvl/paper-2015-esc-convnet)
 
+# Expected results on a GTX 980 Ti GPU:
+
+```
+Epoch:   0 -  47.4 s /  59.9 s | Train:   1.90 % | Validation:   2.50 % | Test:   3.00 %
+Epoch:   1 -  37.0 s /  38.7 s | Train:   2.20 % | Validation:   1.50 % | Test:   2.20 %
+Epoch:   2 -  46.3 s /  47.9 s | Train:   3.20 % | Validation:   4.50 % | Test:   5.00 %
+Epoch:   3 -  46.4 s /  48.1 s | Train:   5.10 % | Validation:   7.00 % | Test:   8.20 %
+Epoch:   4 -  46.2 s /  47.7 s | Train:   7.80 % | Validation:  10.50 % | Test:  11.70 %
+
+[...]
+
+Epoch: 145 -  46.8 s /  48.6 s | Train:  92.00 % | Validation:  63.50 % | Test:  66.50 %
+Epoch: 146 -  47.2 s /  49.2 s | Train:  91.90 % | Validation:  62.50 % | Test:  68.50 %
+Epoch: 147 -  47.2 s /  48.9 s | Train:  92.00 % | Validation:  61.70 % | Test:  66.50 %
+Epoch: 148 -  47.2 s /  48.9 s | Train:  92.20 % | Validation:  63.00 % | Test:  67.00 %
+Epoch: 149 -  46.2 s /  47.9 s | Train:  92.30 % | Validation:  62.20 % | Test:  67.00 %
+```
+
+# Expected results with CPU computation (AMD FX-8350):
+
+```
+Epoch:   0 - 183.7 s / 199.1 s | Train:   2.00 % | Validation:   2.00 % | Test:   2.00 %
+Epoch:   1 - 170.6 s / 180.2 s | Train:   2.30 % | Validation:   3.70 % | Test:   2.50 %
+Epoch:   2 - 178.8 s / 188.6 s | Train:   4.80 % | Validation:   4.50 % | Test:   4.50 %
+Epoch:   3 - 180.4 s / 190.3 s | Train:   6.10 % | Validation:   5.70 % | Test:   5.50 %
+Epoch:   4 - 175.3 s / 184.9 s | Train:   8.00 % | Validation:  10.70 % | Test:  10.00 %
+
+[...]
+
+
+```
+
 """
 
 import argparse
@@ -17,6 +49,7 @@ import os
 import sys
 
 import numpy as np
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -1,0 +1,5 @@
+numpy
+pydub
+librosa
+git+git://github.com/Theano/Theano.git
+keras

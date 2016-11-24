@@ -8,7 +8,8 @@ matrix:
         - python: 3.5
           env: TEST_MODE=PEP8
 install:
-    - pip install pytest pytest-xdist pep8 pytest-pep8 pytest-cov python-coveralls
+    - pip install pytest pytest-xdist pytest-cov python-coveralls coverage==3.7.1
+    - pip install pep8 pytest-pep8
     - pip install -r requirements.txt
     - wget https://github.com/karoldvl/ESC-50/archive/wav-files.zip && unzip -q wav-files.zip -d data/ && mv data/ESC-50-wav-files data/ESC-50 && rm -f wav-files.zip
     - mkdir data/.ESC-50.cache

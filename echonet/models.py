@@ -56,7 +56,8 @@ class EchoNet:
 
         return description
 
-    def fit(self, dataset, batch_size=100, epoch_size=None, epochs=1000, early_stopping=0):
+    def fit(self, dataset, batch_size=100, epoch_size=None, epochs=1000, early_stopping=0,
+            max_q_size=10):
         self.dataset = dataset
         self.early_stopping = early_stopping
 
@@ -67,7 +68,8 @@ class EchoNet:
                                samples_per_epoch=epoch_size,
                                nb_epoch=epochs,
                                callbacks=[EchoNet.Monitor(self)],
-                               verbose=0)
+                               verbose=0,
+                               max_q_size=max_q_size)
 
     class Monitor(keras.callbacks.Callback):
         """

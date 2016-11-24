@@ -88,12 +88,16 @@ class EchoNet:
         def on_train_begin(self, logs={}):
             self.start_time = time.time()
 
+            with open(self.echonet.name + '.log', 'w') as f:
+                f.write(self.echonet.name + '\n')
+
         def on_batch_end(self, batch, logs={}):
             pass # TODO: progress update
 
         def on_epoch_end(self, epoch, logs={}):
             self.loss.append(logs.get('loss'))
             self.train_score.append(logs.get('acc'))
+            time_in_training = time.time() - self.start_time
 
             validation_score = self.echonet.dataset.validate(self.echonet.net)
             self.validation_score.append(validation_score)
@@ -104,12 +108,16 @@ class EchoNet:
             time_elapsed = time.time() - self.start_time
             self.start_time = time.time()
 
-            epoch_summary = 'Epoch: {:>3} - {:>5.1f} s | '.format(epoch, time_elapsed)
+            epoch_summary = 'Epoch: {:>3} - {:>5.1f} s / {:>5.1f} s | '.format(epoch,
+                    time_in_training, time_elapsed)
             epoch_summary += 'Train: {:>6.2f} % | '.format(to_percentage(self.train_score[-1]))
             epoch_summary += 'Validation: {:>6.2f} % | '.format(to_percentage(self.validation_score[-1]))
             epoch_summary += 'Test: {:>6.2f} %'.format(to_percentage(self.test_score[-1]))
 
             print(epoch_summary)
+            sys.stdout.flush()
+            with open(self.echonet.name + '.log', 'a') as f:
+                f.write(epoch_summary + '\n')
 
             # TODO: proper UI handling
             # TODO: stop training = model.stop_training is True

@@ -4,3 +4,4 @@
 /examples/*.h5
 /experiments/
 /data/*
+/.cache/

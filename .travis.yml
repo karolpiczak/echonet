@@ -3,10 +3,15 @@ language: python
 matrix:
     include:
         - python: 3.5
+          env: TEST_MODE=UNIT_TESTS
         - python: 3.5
           env: TEST_MODE=INTEGRATION_TESTS
         - python: 3.5
           env: TEST_MODE=PEP8
+    allow_failures:
+        - python: 3.5
+          env: TEST_MODE=INTEGRATION_TESTS
+    fast_finish: true
 install:
     - pip install pytest pytest-xdist pytest-cov python-coveralls coverage==3.7.1
     - pip install pep8 pytest-pep8
@@ -15,10 +20,10 @@ install:
     - mkdir data/.ESC-50.cache
 script:
     - if [[ "$TEST_MODE" == "INTEGRATION_TESTS" ]]; then
-          PYTHONPATH=$PWD:$PYTHONPATH py.test tests/integration_tests;
+          PYTHONPATH=$PWD:$PYTHONPATH travis_wait 30 py.test tests/integration_tests;
       elif [[ "$TEST_MODE" == "PEP8" ]]; then
           PYTHONPATH=$PWD:$PYTHONPATH py.test --pep8 -m pep8 -n0;
-      else
+      elif [[ "$TEST_MODE" == "UNIT_TESTS" ]]; then
           PYTHONPATH=$PWD:$PYTHONPATH py.test tests/ --ignore=tests/integration_tests;
       fi
 after_success:

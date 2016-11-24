@@ -1,5 +1,7 @@
 # EchoNet
 
+[![Travis](https://img.shields.io/travis/karoldvl/echonet.svg)](https://travis-ci.org/karoldvl/echonet)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/karoldvl/echonet/master/LICENSE)
 [![Waffle.io](https://img.shields.io/waffle/label/karoldvl/echonet/to-do.svg)](http://waffle.io/karoldvl/echonet)
 
 Porting some of my old convnet code into Keras - a work in progress.

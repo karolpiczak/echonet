@@ -84,7 +84,7 @@ class EchoNet:
             self.test_score = []
             self.start_time = None
 
-            #self.f = plt.figure(figsize=(12, 12))
+            # self.f = plt.figure(figsize=(12, 12))
             self.cmap = sb.diverging_palette(220, 10, as_cmap=True)
 
         def on_train_begin(self, logs={}):
@@ -94,7 +94,7 @@ class EchoNet:
                 f.write(self.echonet.name + '\n')
 
         def on_batch_end(self, batch, logs={}):
-            pass # TODO: progress update
+            pass  # TODO: progress update
 
         def on_epoch_end(self, epoch, logs={}):
             self.loss.append(logs.get('loss'))
@@ -110,10 +110,11 @@ class EchoNet:
             time_elapsed = time.time() - self.start_time
             self.start_time = time.time()
 
-            epoch_summary = 'Epoch: {:>3} - {:>5.1f} s / {:>5.1f} s | '.format(epoch,
-                    time_in_training, time_elapsed)
+            epoch_summary = 'Epoch: {:>3} - {:>5.1f} s / {:>5.1f} s | '.format(
+                epoch, time_in_training, time_elapsed)
             epoch_summary += 'Train: {:>6.2f} % | '.format(to_percentage(self.train_score[-1]))
-            epoch_summary += 'Validation: {:>6.2f} % | '.format(to_percentage(self.validation_score[-1]))
+            epoch_summary += 'Validation: {:>6.2f} % | '.format(
+                to_percentage(self.validation_score[-1]))
             epoch_summary += 'Test: {:>6.2f} %'.format(to_percentage(self.test_score[-1]))
 
             print(epoch_summary)

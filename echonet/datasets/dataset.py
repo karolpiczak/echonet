@@ -40,24 +40,29 @@ class Dataset(ABC):
                 yield row
 
     @abstractproperty
-    def input_shape(self): pass
+    def input_shape(self):
+        pass
 
     @abstractmethod
-    def iterbatches(self, batch_size): pass
+    def iterbatches(self, batch_size):
+        pass
 
     @abstractproperty
-    def train_size(self): pass
+    def train_size(self):
+        pass
 
     @abstractmethod
-    def validate(self, model): pass
+    def validate(self, model):
+        pass
 
     @abstractproperty
-    def validation_size(self): pass
+    def validation_size(self):
+        pass
 
     @abstractmethod
-    def test(self, model): pass
+    def test(self, model):
+        pass
 
     @abstractproperty
-    def test_size(self): pass
-
-
+    def test_size(self):
+        pass

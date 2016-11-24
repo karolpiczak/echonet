@@ -77,11 +77,11 @@ class ESC(Dataset):
                 continue
 
             audio = load_audio(self.data_dir + 'audio/' + row.filename, 44100)
-            #audio *= 1.0 / np.max(np.abs(audio))
+            # audio *= 1.0 / np.max(np.abs(audio))
 
             spec = librosa.feature.melspectrogram(audio, sr=44100, n_fft=self.FFT, fmax=self.FMAX,
                                                   hop_length=self.HOP, n_mels=self.BANDS)
-            #spec = librosa.logamplitude(spec)
+            # spec = librosa.logamplitude(spec)
             freqs = librosa.core.mel_frequencies(n_mels=self.BANDS, fmax=self.FMAX)
             spec = librosa.core.perceptual_weighting(spec, freqs, ref_power=np.max)
 

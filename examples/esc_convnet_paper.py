@@ -78,7 +78,6 @@ if __name__ == '__main__':
     from echonet.models import EchoNet
     from echonet.datasets.esc_original import OriginalESC
 
-
     def uniform(scale):
         return functools.partial(keras.initializations.uniform, scale=scale)
 

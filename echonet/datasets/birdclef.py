@@ -24,6 +24,7 @@ from echonet.utils.generics import generate_delta, load_audio, to_one_hot
 
 from IPython.core.debugger import Tracer
 
+
 class BirdCLEF2016(Dataset):
     """
 
@@ -48,7 +49,7 @@ class BirdCLEF2016(Dataset):
             self.BANDS //= 3
 
         self.class_count = len(self.encoder.classes_)
-        
+
         self._split_dataset()
 
         self.train_meta = self.meta[self.meta['fold'] == 'train']
@@ -213,7 +214,7 @@ class BirdCLEF2016(Dataset):
 
         right = self.recordings[['filename', 'fold']].rename(columns={'filename': 'recording'})
         self.meta = pd.merge(self.meta, right, on='recording')
-    
+
     @property
     def input_shape(self):
         return 1 + self.WITH_DELTA, self.BANDS, self.SEGMENT_LENGTH
@@ -262,7 +263,7 @@ class BirdCLEF2016(Dataset):
             columns = row._fields[1:]
             rows = []
 
-            for _ in range(2): # multiply segment variants for prediction
+            for _ in range(2):  # multiply segment variants for prediction
                 X.append(self._extract_segment(row.filename))
                 y.append(row.target)
                 rows.append(pd.DataFrame(values, columns=columns, index=[0]))

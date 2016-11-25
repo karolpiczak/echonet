@@ -20,7 +20,7 @@ install:
     - mkdir data/.ESC-50.cache
 script:
     - if [[ "$TEST_MODE" == "INTEGRATION_TESTS" ]]; then
-          PYTHONPATH=$PWD:$PYTHONPATH travis_wait 30 py.test tests/integration_tests --timeout=1200;
+          PYTHONPATH=$PWD:$PYTHONPATH travis_wait 45 py.test tests/integration_tests --timeout=2400;
       elif [[ "$TEST_MODE" == "PEP8" ]]; then
           PYTHONPATH=$PWD:$PYTHONPATH py.test --pep8 -m pep8 -n0;
       elif [[ "$TEST_MODE" == "UNIT_TESTS" ]]; then

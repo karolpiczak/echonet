@@ -38,7 +38,11 @@ Epoch:   4 - 175.3 s / 184.9 s | Train:   8.00 % | Validation:  10.70 % | Test: 
 
 [...]
 
-
+Epoch: 145 - 179.5 s / 189.1 s | Train:  91.70 % | Validation:  62.00 % | Test:  65.00 %
+Epoch: 146 - 180.6 s / 190.3 s | Train:  92.20 % | Validation:  62.20 % | Test:  63.70 %
+Epoch: 147 - 181.8 s / 191.4 s | Train:  91.80 % | Validation:  63.20 % | Test:  65.00 %
+Epoch: 148 - 182.8 s / 193.7 s | Train:  92.10 % | Validation:  63.50 % | Test:  66.00 %
+Epoch: 149 - 177.9 s / 188.4 s | Train:  92.00 % | Validation:  62.70 % | Test:  66.20 %
 ```
 
 """

@@ -54,7 +54,7 @@ def test_esc10_batches(esc10):
 
     expected = np.load('tests/echonet/datasets/esc10.npz')
 
-    assert np.allclose(batch[0][0:5], expected['X'])
+    assert np.allclose(batch[0][0:5], expected['X'], atol=1e-07)
     assert np.allclose(batch[1][0:5], expected['y'])
 
 
@@ -66,5 +66,5 @@ def test_esc50_batches(esc50):
 
     expected = np.load('tests/echonet/datasets/esc50.npz')
 
-    assert np.allclose(batch[0][0:5], expected['X'])
+    assert np.allclose(batch[0][0:5], expected['X'], atol=1e-07)
     assert np.allclose(batch[1][0:5], expected['y'])

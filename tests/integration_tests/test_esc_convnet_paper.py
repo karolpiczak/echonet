@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Test reproducibility of the original implementation of the ESC-ConvNet paper."""
 
 import os
 import re

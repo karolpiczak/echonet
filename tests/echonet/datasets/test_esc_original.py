@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+import shutil
+
 import numpy as np
 import pytest
 
@@ -14,14 +17,18 @@ TEST_FOLDS = [1]
 
 @pytest.fixture(scope='module')
 def esc10():
-    return OriginalESC('data/ESC-50/', 'data/.ESC-50.cache',
-                       TRAIN_FOLDS, VALIDATION_FOLDS, TEST_FOLDS, True)
+    TEST_DIR = 'data/.OriginalESC-10.test.cache'
+    shutil.rmtree(TEST_DIR, ignore_errors=True)
+    os.mkdir(TEST_DIR)
+    return OriginalESC('data/ESC-50/', TEST_DIR, TRAIN_FOLDS, VALIDATION_FOLDS, TEST_FOLDS, True)
 
 
 @pytest.fixture(scope='module')
 def esc50():
-    return OriginalESC('data/ESC-50/', 'data/.ESC-50.cache',
-                       TRAIN_FOLDS, VALIDATION_FOLDS, TEST_FOLDS)
+    TEST_DIR = 'data/.OriginalESC-50.test.cache'
+    shutil.rmtree(TEST_DIR, ignore_errors=True)
+    os.mkdir(TEST_DIR)
+    return OriginalESC('data/ESC-50/', TEST_DIR, TRAIN_FOLDS, VALIDATION_FOLDS, TEST_FOLDS)
 
 
 def test_input_shape(esc50):

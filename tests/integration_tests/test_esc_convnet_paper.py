@@ -5,20 +5,13 @@ import os
 import re
 import subprocess
 
-from subprocess import STDOUT
+from subprocess import PIPE, STDOUT
 
 import pytest
 
 
-def test_results_reproducibility(capsys, device, timeout):
-    os.chdir('examples')
-    try:
-        cmd = ['./esc_convnet_paper.py', '-D', device]
-        out = subprocess.check_output(cmd, stderr=STDOUT, timeout=timeout)
-    except subprocess.TimeoutExpired as e:
-        out = e.output
-    out = out.decode('utf-8')
-
+@pytest.mark.timeout(2400)
+def test_results_reproducibility(device):
     if device == 'gpu0':
         expected_results = [
             r'Epoch:   0 (.*) | Train:   1.90 % | Validation:   2.50 % | Test:   3.00 %',
@@ -32,11 +25,20 @@ def test_results_reproducibility(capsys, device, timeout):
             r'Epoch:   2 (.*) | Train:   4.80 % | Validation:   4.50 % | Test:   4.50 %',
         ]
 
-    if timeout > 900:
-        assert re.search(expected_results[0], out) is not None  # Limited tests with Travis
-    else:
-        for line in expected_results:
-            assert re.search(line, out) is not None
+    os.chdir('examples')
+    cmd = ['./esc_convnet_paper.py', '-D', device]
+    popen = subprocess.Popen(cmd, stdout=PIPE, stderr=STDOUT, universal_newlines=True)
+
+    verified_epochs = 0
+
+    for line in iter(popen.stdout.readline, ""):
+        if line.startswith('Epoch: '):
+            print('.', end='', flush=True)
+            assert re.search(expected_results[verified_epochs], line) is not None
+            verified_epochs += 1
+
+        if (device == 'cpu' and verified_epochs > 1) or verified_epochs > 2:
+            break
 
 
 if __name__ == '__main__':

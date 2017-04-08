@@ -15,3 +15,4 @@ Current features:
 For the time being some important requirements:
 - Python 3.5
 - ESC-50 WAV version: https://github.com/karoldvl/ESC-50/archive/wav-files.zip
+- Install dependencies with ```sudo pip install -r requirements.txt```
